@@ -1,4 +1,5 @@
 import random
+import os
 import pygame
 from pygame.constants import QUIT, K_DOWN, K_UP, K_RIGHT, K_LEFT
 
@@ -21,6 +22,9 @@ background_X1 = 0
 background_X2 = background.get_width()
 background_move = 3
 
+IMAGE_PATH = "Goose"
+PLAYER_IMAGES = os.listdir(IMAGE_PATH)
+
 PLAYER_SIZE = (20, 20)
 player = pygame.image.load('player.png').convert_alpha()
 player_rect = player.get_rect()
@@ -35,7 +39,7 @@ bonus_surface = pygame.image.load('bonus.png').convert_alpha()
 
 def create_enemy():
     rect =  pygame.Rect(
-        WIDTH - enemy_surface.get_width(), 
+        WIDTH, 
         random.randint(enemy_surface.get_width(), HEIGHT - enemy_surface.get_height()), 
         *enemy_surface.get_size()
     )
@@ -55,13 +59,18 @@ CREATE_ENEMY = pygame.USEREVENT + 1
 pygame.time.set_timer(CREATE_ENEMY, 1500)
 
 CREATE_BONUS = pygame.USEREVENT + 2
-pygame.time.set_timer(CREATE_BONUS, 1500)
+pygame.time.set_timer(CREATE_BONUS, 3000)
+
+CHANGE_IMAGE = pygame.USEREVENT + 3
+pygame.time.set_timer(CHANGE_IMAGE, 200)
 
 enemies = []
 
 bonuses = []
 
 score = 0
+
+image_index = 0
 
 playing = True
 
@@ -75,6 +84,11 @@ while playing:
             enemies.append(create_enemy())
         if event.type == CREATE_BONUS:
             bonuses.append(create_bonus())
+        if event.type == CHANGE_IMAGE:
+            player = pygame.image.load(os.path.join(IMAGE_PATH, PLAYER_IMAGES[image_index]))
+            image_index += 1
+            if image_index >= len(PLAYER_IMAGES):
+                image_index = 0
     
     background_X1 -= background_move
     background_X2 -= background_move

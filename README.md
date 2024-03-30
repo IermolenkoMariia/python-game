@@ -24,6 +24,8 @@ This sample game provides a basic framework for building Pygame games. It demons
 * Event handling (processing user input)
 * Drawing graphics (creating visual elements using Pygame's drawing functions)
 
+![game preview](./game_preview.gif)
+
 ### Further Exploration
 
 Pygame offers many features and possibilities for creating more complex and engaging games. Here are some resources to help you expand your Pygame knowledge:
